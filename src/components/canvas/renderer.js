@@ -17,4 +17,5 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping
 
 renderer.gammaInput = true
 renderer.gammaOutput = true
-renderer.toneMappingExposure = Math.pow(0.9, 4.0)
+renderer.toneMappingExposure = 1.1
+// renderer.toneMappingExposure = Math.pow(0.9, 4.0)

@@ -1,13 +1,6 @@
 import * as THREE from "three"
-import { gui } from './components/canvas/gui'
 
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js"
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js"
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js"
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
-import { CopyShader } from "three/examples/jsm/shaders/CopyShader.js"
-import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js"
-import { LuminosityHighPassShader } from "three/examples/jsm/shaders/LuminosityHighPassShader.js"
+import effectsComposer from "./components/canvas/effects"
 
 // import { cursor } from "./utils/cursor"
 
@@ -21,7 +14,7 @@ import { stats } from "./components/canvas/stats"
 // Components
 import mirror from "./components/mirror"
 import ground from "./components/ground"
-import "./components/car"
+import { loadCar } from "./components/car"
 import torus from "./components/torus"
 
 import "./utils/resize"
@@ -33,48 +26,40 @@ camera.layers.enable(1)
  * Scene
  * ----------------------
  */
-torus.forEach(t => {
+torus.forEach((t) => {
   t.layers.enable(1)
   scene.add(t)
 })
 scene.add(camera, ...lights)
-scene.add(ground, mirror)
+scene.add(ground)
+scene.add(mirror)
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.75)
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
 
 scene.add(ambientLight, directionalLight)
 
-const renderScene = new RenderPass(scene, camera)
-
-const effectFXAA = new ShaderPass(FXAAShader)
-effectFXAA.uniforms.resolution.value.set(1 / window.innerWidth, 1 / window.innerHeight)
-
-const unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85)
-unrealBloomPass.threshold = 0
-unrealBloomPass.strength = 2.25
-unrealBloomPass.radius = 0.35
-unrealBloomPass.renderToScreen = true
-
-const effectsFolder = gui.addFolder('Effects')
-effectsFolder.add(unrealBloomPass, 'threshold', 0.0, 1.0).name('Threshold')
-effectsFolder.add(unrealBloomPass, 'strength', 0.0, 10.0).name('Strength')
-effectsFolder.add(unrealBloomPass, 'radius', 0.0, 1.0).name('Radius')
-
-const composer = new EffectComposer(renderer)
-composer.setSize(window.innerWidth, window.innerHeight)
-
-composer.addPass(renderScene)
-composer.addPass(effectFXAA)
-composer.addPass(unrealBloomPass)
-
 const cameraTarget = camera.position.clone()
-setTimeout(() => {
-  initAnimations()
-}, 2000)
 
-const initAnimations = () => {
+let cubeRenderTarget, cubeCamera
+
+const init = () => {
   cameraTarget.set(1.5, 0.95, 5.5)
+
+  // cubeRenderTarget = new THREE.WebGLRenderTarget(128, {
+  //   format: THREE.RGBFormat,
+  //   generateMipmaps: true,
+  //   // encoding: THREE.sRGBEncoding,
+  //   minFilter: THREE.LinearMipmapLinearFilter
+  // })
+
+  // setTimeout(() => {
+  //   cubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget)
+  //   cubeCamera.position.set(0, 50, 0)
+  //   scene.add(cubeCamera)
+  // }, 100)
+
+  tick()
 }
 
 /**
@@ -82,18 +67,28 @@ const initAnimations = () => {
  * Animations
  * ----------------------
  */
-const clock = new THREE.Clock()
+// const clock = new THREE.Clock()
 const tick = () => {
   window.requestAnimationFrame(tick)
   stats.begin()
 
   renderer.autoClear = false
   renderer.clear()
-
+  console.log(camera)
   camera.layers.set(1)
-  composer.render()
+  effectsComposer.render()
 
-  camera.position.lerp(cameraTarget, 0.015);
+  // scene.traverse((child) => {
+  //   if (child.isGroup) {
+  //     const car = child.children[0]
+  //     // car.visible = false
+  //     // cubeCamera.position.copy(car.position)
+  //     // car.visible = true
+  //   }
+  // })
+  // cubeCamera.update(renderer, scene)
+
+  camera.position.lerp(cameraTarget, 0.015)
 
   orbitControls.update()
 
@@ -104,4 +99,7 @@ const tick = () => {
   stats.end()
 }
 
-tick()
+loadCar().then((carScene) => {
+  scene.add(carScene.scene)
+  init()
+})

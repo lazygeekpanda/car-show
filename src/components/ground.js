@@ -1,9 +1,9 @@
 import * as THREE from "three"
 
-import { textureLoader } from '../utils/loaders'
+import { textureLoader } from "../utils/loaders"
 
-const normalMap = textureLoader.load('textures/terrain-normal.jpg')
-const roughnessMap = textureLoader.load('textures/terrain-roughness.jpg')
+const normalMap = textureLoader.load("textures/terrain-normal.jpg")
+const roughnessMap = textureLoader.load("textures/terrain-roughness.jpg")
 
 const geometry = new THREE.PlaneGeometry(7, 30)
 const material = new THREE.MeshPhysicalMaterial({

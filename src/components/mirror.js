@@ -12,6 +12,5 @@ const mirror = new Reflector(geometry, {
 })
 
 mirror.rotation.x = -Math.PI / 2
-mirror.receiveShadow = true
 
 export default mirror
