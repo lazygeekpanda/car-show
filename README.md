@@ -1,4 +1,4 @@
-# Cargo deck builder (vanilla js)
+# 3D Car Show
 
 ## Models
  - [Cehvorlet Corvette C7](https://sketchfab.com/3d-models/chevrolet-corvette-c7-2b509d1bce104224b147c81757f6f43a)
