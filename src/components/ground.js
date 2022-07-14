@@ -1,31 +1,32 @@
 import * as THREE from "three"
-import { renderer } from "./canvas/renderer"
-import { FlakesTexture } from "three/examples/jsm/textures/FlakesTexture"
 
-const texture = new THREE.CanvasTexture(new FlakesTexture())
+import { textureLoader } from '../utils/loaders'
 
-texture.wrapS = THREE.RepeatWrapping
-texture.wrapT = THREE.RepeatWrapping
+const normalMap = textureLoader.load('textures/terrain-normal.jpg')
+const roughnessMap = textureLoader.load('textures/terrain-roughness.jpg')
 
-texture.repeat.x = 10
-texture.repeat.y = 10
-
-const geometry = new THREE.PlaneGeometry(30, 30)
+const geometry = new THREE.PlaneGeometry(7, 30)
 const material = new THREE.MeshPhysicalMaterial({
-  color: 0x000000,
+  // color: 0xffffff,
+  color: 0x020202,
   clearcoat: 1,
   clearcoatRoughness: 0.2,
-  normalMap: texture,
-  normalScale: new THREE.Vector2(0.15, 0.15),
+
   dithering: true,
-  roughness: 0.7,
-  metalness: 0.9
+  roughness: 0.25,
+  metalness: 0.9,
+  reflectivity: 1,
+  opacity: 0.85,
+  transparent: true,
+  normalMap,
+  normalScale: new THREE.Vector2(0.15, 0.15),
+  roughnessMap
 })
 
 const ground = new THREE.Mesh(geometry, material)
 
 ground.rotation.x = -Math.PI / 2
+ground.position.y = 0.01
 ground.receiveShadow = true
-ground.castShadow = true
 
 export default ground
