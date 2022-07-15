@@ -1,23 +1,22 @@
 import * as THREE from "three"
 
 const TORUS_COUNT = 8
-const colors = [0x14b8a6, 0xd946ef]
 
 const list = []
 
 const materialOptions = {
   color: 0x000000,
-  emissiveIntensity: 0.5,
+  emissiveIntensity: 1,
 }
 
 const geometry = new THREE.TorusGeometry(3.35, 0.04, 16, 100, Math.PI)
 const violetMaterial = new THREE.MeshStandardMaterial({
   ...materialOptions,
-  emissive: 0x14b8a6,
+  emissive: 0xFB3640,
 })
 const tealMaterial = new THREE.MeshStandardMaterial({
   ...materialOptions,
-  emissive: 0xd946ef
+  emissive: 0x3D0185
 })
 
 const arr = [...Array(TORUS_COUNT).keys()]

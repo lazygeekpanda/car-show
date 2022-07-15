@@ -4,10 +4,10 @@ import { Reflector } from "three/examples/jsm/objects/Reflector"
 const geometry = new THREE.PlaneGeometry(7, 30)
 
 const mirror = new Reflector(geometry, {
-  clipBias: 0.003,
+  clipBias: 0.0003,
   textureWidth: window.innerWidth * window.devicePixelRatio,
   textureHeight: window.innerHeight * window.devicePixelRatio,
-  color: 0x777777,
+  color: 0x222222,
   multisample: 256,
 })
 

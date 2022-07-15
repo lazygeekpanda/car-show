@@ -1,5 +1,9 @@
 # 3D Car Show
 
+## Read
+- [The Big List of three.js](https://discoverthreejs.com/tips-and-tricks/)
+- [How to update things](https://threejs.org/docs/#manual/en/introduction/How-to-update-things)
+
 ## Models
  - [Cehvorlet Corvette C7](https://sketchfab.com/3d-models/chevrolet-corvette-c7-2b509d1bce104224b147c81757f6f43a)
  - [Cyberpunk Car](https://sketchfab.com/3d-models/cyberpunk-car-b4301ff99d214d16a7a43708a5866bf0)

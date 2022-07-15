@@ -43,7 +43,7 @@ tealSpotLightGroup.add(tealSpotLight, 'distance').min(0).max(1000).step(1).name(
  * Rose Spot Light
  * ----------------------
  */
-const roseSpotLight = new THREE.SpotLight(0xf43f5e, 25)
+const roseSpotLight = new THREE.SpotLight(0xf43f5e, 10)
 
 roseSpotLight.castShadow = true
 roseSpotLight.position.set(-25, 5, 0)
