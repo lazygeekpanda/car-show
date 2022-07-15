@@ -64,18 +64,18 @@ const initCubeCamera = () => {
     minFilter: THREE.LinearMipmapLinearFilter
   })
   cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRenderTarget)
-  // scene.add(cubeCamera)
+  scene.add(cubeCamera)
 
-  // carModel.scene.visible = false
-  // cubeCamera.position.copy(carModel.scene.position)
-  // cubeCamera.update(renderer, scene)
-  // carModel.scene.visible = true
+  carModel.scene.visible = false
+  cubeCamera.position.copy(carModel.scene.position)
+  cubeCamera.update(renderer, scene)
+  carModel.scene.visible = true
 
-  // carModel.scene.traverse((object) => {
-  //   if (object.isMesh) {
-  //     object.material.envMap = cubeRenderTarget.texture
-  //   }
-  // })
+  carModel.scene.traverse((object) => {
+    if (object.isMesh) {
+      object.material.envMap = cubeRenderTarget.texture
+    }
+  })
 }
 
 /**
