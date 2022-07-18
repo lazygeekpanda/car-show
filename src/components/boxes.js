@@ -7,9 +7,7 @@ const amount = 6
 const count = Math.pow(amount, 2)
 
 const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({
-  envMapIntensity: 0.15
-})
+const material = new THREE.MeshBasicMaterial({})
 
 const instancedBoxMesh = new THREE.InstancedMesh(geometry, material, count)
 // instancedBoxMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
@@ -45,7 +43,7 @@ for (let i = 0; i < count; i++) {
   dummy.updateMatrix()
 
   instancedBoxMesh.setMatrixAt(i, dummy.matrix)
-  instancedBoxMesh.setColorAt(i, new THREE.Color(i % 2 ? 0xFFCB47 : 0xF27D7D))
+  instancedBoxMesh.setColorAt(i, new THREE.Color(...(i % 2 ? [0.4, 0.1, 0.1] : [0.05, 0.15, 0.4])))
   instancedBoxMesh.instanceMatrix.needsUpdate = true
 
   instancedBoxMesh.castShadow = true
@@ -85,5 +83,7 @@ export const renderBoxes = () => {
     instancedBoxMesh.instanceMatrix.needsUpdate = true
   }
 }
+
+instancedBoxMesh.layers.enable(1)
 
 export default instancedBoxMesh

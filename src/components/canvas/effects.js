@@ -23,6 +23,7 @@ unrealBloomPass.radius = 0.15
 unrealBloomPass.renderToScreen = true
 
 const effectsFolder = gui.addFolder("Effects")
+
 effectsFolder.add(unrealBloomPass, "threshold", 0.0, 1.0).name("Threshold")
 effectsFolder.add(unrealBloomPass, "strength", 0.0, 10.0).name("Strength")
 effectsFolder.add(unrealBloomPass, "radius", 0.0, 1.0).name("Radius")

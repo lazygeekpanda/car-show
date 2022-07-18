@@ -12,7 +12,7 @@ const lights = []
 const tealSpotLight = new THREE.SpotLight(0x2dd4bf, 1.5)
 
 tealSpotLight.castShadow = true
-tealSpotLight.position.set(25, 5, -20)
+tealSpotLight.position.set(7, 1, -10)
 tealSpotLight.angle = 0.6
 tealSpotLight.penumbra = 1
 // tealSpotLight.decay = 8

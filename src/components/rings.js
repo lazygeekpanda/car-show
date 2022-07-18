@@ -1,6 +1,6 @@
 import * as THREE from "three"
 
-const RING_COUNT = 14
+const RING_COUNT = 10
 
 const list = []
 
@@ -12,11 +12,11 @@ const materialOptions = {
 const geometry = new THREE.TorusGeometry(3.35, 0.04, 16, 100, Math.PI)
 const violetMaterial = new THREE.MeshStandardMaterial({
   ...materialOptions,
-  emissive: new THREE.Color(6, 0.15, 0.7)
+  emissive: 0xfff
 })
 const tealMaterial = new THREE.MeshStandardMaterial({
   ...materialOptions,
-  emissive: new THREE.Color(0.1, 0.7, 3)
+  emissive: 0xfff
 })
 
 const arr = [...Array(RING_COUNT).keys()]

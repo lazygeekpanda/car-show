@@ -12,11 +12,11 @@ diffuseMap.offset.set(0, 0)
 
 const geometry = new THREE.PlaneBufferGeometry(35, 35)
 const material = new THREE.MeshBasicMaterial({
-  color: 0xffffff,
+  color: 0xA833B9,
   side: THREE.DoubleSide,
   map: diffuseMap,
   alphaMap: diffuseMap,
-  opacity: 0.175,
+  opacity: 0.5,
   transparent: true
 })
 
@@ -29,6 +29,8 @@ const clock = new THREE.Clock()
 export const renderGrid = () => {
   let t = -clock.getElapsedTime() * 0.68
   diffuseMap.offset.set(0, t)
+
+  grid.position.y += Math.sin(t) / 1000
 }
 
 export default grid

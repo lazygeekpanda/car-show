@@ -31,17 +31,17 @@ scene.add(camera, ...lights)
 scene.add(ground)
 // scene.add(mirror)
 scene.add(grid)
-scene.add(boxes)
+// scene.add(boxes)
 scene.add(...rings)
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.75)
+const ambientLight = new THREE.AmbientLight(0xffffff, 1)
 const directionalLight = new THREE.DirectionalLight(0x2dd4bf, 0.75)
 
 scene.add(ambientLight, directionalLight)
 
 const cameraTarget = camera.position.clone()
 
-let cubeCamera, carModel
+let cubeCamera, cubeRenderTarget, carModel
 let cameraTargetFinished = false
 
 const init = () => {
@@ -57,12 +57,12 @@ const init = () => {
 }
 
 const initCubeCamera = () => {
-  const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
+  cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
     generateMipmaps: true,
-    encoding: THREE.sRGBEncoding,
+    // encoding: THREE.sRGBEncoding,
     minFilter: THREE.LinearMipmapLinearFilter
   })
-  cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRenderTarget)
+  cubeCamera = new THREE.CubeCamera(0.1, 10, cubeRenderTarget)
   scene.add(cubeCamera)
 
   carModel.scene.visible = false
@@ -82,8 +82,12 @@ const initCubeCamera = () => {
  * Animations
  * ----------------------
  */
-// const clock = new THREE.Clock()
+
+const clock = new THREE.Clock()
+
 const render = () => {
+  let t = clock.getElapsedTime()
+
   window.requestAnimationFrame(render)
 
   renderer.autoClear = false
@@ -91,40 +95,52 @@ const render = () => {
   camera.layers.set(1)
   effectsComposer.render()
 
-  if (!cameraTargetFinished) {
-    // camera.position.lerp(cameraTarget, 0.01)
-  }
+  // camera.position.x += Math.sin(t) / 100
+  camera.position.z += Math.sin(t) / 1000
+  camera.position.y += Math.sin(t) / 1000
+
+  // if (!cameraTargetFinished) {
+  //   camera.position.lerp(cameraTarget, 0.01)
+  // } else {
+  //   camera.position.x += Math.sin(t) / 100
+  //   camera.position.y += Math.sin(t) / 500
+  // }
 
   orbitControls.update()
 
-  renderBoxes()
+  // renderBoxes()
   renderGrid()
-  renderCar()
-  renderRings()
+  // renderRings()
 
   // Render scene
   renderer.clearDepth()
   camera.layers.set(0)
+  renderCar()
   renderer.render(scene, camera)
 
   stats.update()
 }
 
-const clock = new THREE.Clock()
-
 const renderCar = () => {
   let t = clock.getElapsedTime()
 
   let group = carModel.scene.children[0].children[0].children[0]
-  group.children[0].rotation.x = t * 2
-  group.children[2].rotation.x = t * 2
-  group.children[4].rotation.x = t * 2
-  group.children[6].rotation.x = t * 2
+  group.children[0].rotation.x += 0.15
+  group.children[2].rotation.x += 0.15
+  group.children[4].rotation.x += 0.15
+  group.children[6].rotation.x += 0.15
 
-  group.children[0].updateMatrix()
-  group.children[2].updateMatrix()
-  group.children[4].updateMatrix()
-  group.children[6].updateMatrix()
+  if (cubeCamera) {
+    // carModel.scene.visible = false
+    // cubeCamera.position.copy(carModel.scene.position)
+    // cubeCamera.update(renderer, scene)
+    // carModel.scene.visible = true
+    // carModel.scene.updateMatrix()
+  }
+
+  carModel.scene.traverse((object) => {
+    object.updateMatrix()
+  })
 }
 
 loadCar().then((carScene) => {
