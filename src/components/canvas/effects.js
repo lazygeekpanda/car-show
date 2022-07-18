@@ -18,7 +18,7 @@ effectFXAA.uniforms.resolution.value.set(0.25 / window.innerWidth, 0.25 / window
 
 const unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2), 1.5, 0.4, 0.85)
 unrealBloomPass.threshold = 0
-unrealBloomPass.strength = 3.25
+unrealBloomPass.strength = 1
 unrealBloomPass.radius = 0.15
 unrealBloomPass.renderToScreen = true
 

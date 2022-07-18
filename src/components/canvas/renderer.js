@@ -14,10 +14,8 @@ renderer.autoClear = false
 
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap
-renderer.outputEncoding = THREE.sRGBEncoding
-renderer.toneMapping = THREE.ACESFilmicToneMapping
+// renderer.outputEncoding = THREE.sRGBEncoding
 
 renderer.gammaInput = true
 renderer.gammaOutput = true
-renderer.gammaFactor = 2.2
 renderer.toneMappingExposure = Math.pow(0.9, 4.0)

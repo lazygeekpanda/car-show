@@ -9,6 +9,16 @@ const { width: w, height: h, length: l } = groundSize
 const normalMap = textureLoader.load("textures/terrain-normal.jpg")
 const roughnessMap = textureLoader.load("textures/terrain-roughness.jpg")
 
+normalMap.wrapS = THREE.RepeatWrapping;
+normalMap.wrapT = THREE.RepeatWrapping;
+normalMap.repeat.set(5, 5);
+normalMap.offset.set(0, 0);
+
+roughnessMap.wrapS = THREE.RepeatWrapping;
+roughnessMap.wrapT = THREE.RepeatWrapping;
+roughnessMap.repeat.set(5, 5);
+roughnessMap.offset.set(0, 0);
+
 const geometry = new THREE.BoxBufferGeometry(w, l, h)
 const material = new THREE.MeshPhysicalMaterial({
   color: 0x222,
@@ -19,7 +29,7 @@ const material = new THREE.MeshPhysicalMaterial({
   roughness: 0.55,
   metalness: 0.5,
   reflectivity: 1,
-  opacity: 0.25,
+  opacity: 0.35,
   transparent: true,
   normalMap,
   normalScale: new THREE.Vector2(0.15, 0.15),
@@ -40,6 +50,5 @@ groundFolder.add(ground.material, "roughness", 0, 1)
 groundFolder.add(ground.material, "metalness", 0, 1)
 groundFolder.add(ground.material, "reflectivity", 0, 1)
 groundFolder.add(ground.material, "opacity", 0, 1)
-// groundFolder.add(ground.material, "emissive")
 
 export default ground

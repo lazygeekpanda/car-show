@@ -24,4 +24,11 @@ const grid = new THREE.Mesh(geometry, material)
 grid.rotation.x = -Math.PI / 2
 grid.position.y = 0.225
 
+const clock = new THREE.Clock()
+
+export const renderGrid = () => {
+  let t = -clock.getElapsedTime() * 0.68
+  diffuseMap.offset.set(0, t)
+}
+
 export default grid

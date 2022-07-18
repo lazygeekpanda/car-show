@@ -13,9 +13,9 @@ import { stats } from "./components/canvas/stats"
 import mirror from "./components/mirror"
 import ground from "./components/ground"
 import { loadCar } from "./components/car"
-import grid from "./components/grid"
+import grid, { renderGrid } from "./components/grid"
 import boxes, { renderBoxes } from "./components/boxes"
-import torus from "./components/torus"
+import rings, { renderRings } from "./components/rings"
 
 import effectsComposer from "./components/canvas/effects"
 import "./utils/resize"
@@ -32,9 +32,9 @@ scene.add(ground)
 // scene.add(mirror)
 scene.add(grid)
 scene.add(boxes)
-scene.add(...torus)
+scene.add(...rings)
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.75)
 const directionalLight = new THREE.DirectionalLight(0x2dd4bf, 0.75)
 
 scene.add(ambientLight, directionalLight)
@@ -48,7 +48,7 @@ const init = () => {
   cameraTarget.set(1.2, 0.95, 3.5)
   camera.position.copy(cameraTarget)
 
-  tick()
+  render()
   initCubeCamera()
 
   setTimeout(() => {
@@ -58,7 +58,6 @@ const init = () => {
 
 const initCubeCamera = () => {
   const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
-    // format: THREE.RGBFormat,
     generateMipmaps: true,
     encoding: THREE.sRGBEncoding,
     minFilter: THREE.LinearMipmapLinearFilter
@@ -84,8 +83,8 @@ const initCubeCamera = () => {
  * ----------------------
  */
 // const clock = new THREE.Clock()
-const tick = () => {
-  window.requestAnimationFrame(tick)
+const render = () => {
+  window.requestAnimationFrame(render)
 
   renderer.autoClear = false
   renderer.clear()
@@ -96,10 +95,12 @@ const tick = () => {
     // camera.position.lerp(cameraTarget, 0.01)
   }
 
-  // cubeCamera.update(renderer, scene)
   orbitControls.update()
 
   renderBoxes()
+  renderGrid()
+  renderCar()
+  renderRings()
 
   // Render scene
   renderer.clearDepth()
@@ -107,6 +108,23 @@ const tick = () => {
   renderer.render(scene, camera)
 
   stats.update()
+}
+
+const clock = new THREE.Clock()
+
+const renderCar = () => {
+  let t = clock.getElapsedTime()
+
+  let group = carModel.scene.children[0].children[0].children[0]
+  group.children[0].rotation.x = t * 2
+  group.children[2].rotation.x = t * 2
+  group.children[4].rotation.x = t * 2
+  group.children[6].rotation.x = t * 2
+
+  group.children[0].updateMatrix()
+  group.children[2].updateMatrix()
+  group.children[4].updateMatrix()
+  group.children[6].updateMatrix()
 }
 
 loadCar().then((carScene) => {

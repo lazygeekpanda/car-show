@@ -7,16 +7,19 @@ const amount = 6
 const count = Math.pow(amount, 2)
 
 const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial()
+const material = new THREE.MeshBasicMaterial({
+  envMapIntensity: 0.15
+})
 
 const instancedBoxMesh = new THREE.InstancedMesh(geometry, material, count)
-instancedBoxMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
+// instancedBoxMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
 
 const dummy = new THREE.Object3D()
+const matrix = new THREE.Matrix4()
 const meshProperties = []
 
 for (let i = 0; i < count; i++) {
-  const scale = Math.random() ** 2 * 0.5 ** 2 * 2
+  const scale = Math.pow(Math.random(), 2.0) * 0.5 + 0.05
   const inverse = Math.random() > 0.5
   const xRotationSpeed = Math.random() * 5 * (inverse ? -1 : 1)
   const yRotationSpeed = Math.random() * 5 * (inverse ? -1 : 1)
@@ -24,23 +27,31 @@ for (let i = 0; i < count; i++) {
   const v = new THREE.Vector3(
     Math.random() * 2 - 1,
     (Math.random() * 2.5 - 1) * 0.5 + 0.5,
-    (Math.random() * 2 - 1) * (l / 2)
+    (Math.random() * 2 - 1) * (l / 3)
   )
 
   if (v.x < 0) {
-    v.x -= 2.35
+    v.x -= 1.75
   } else {
-    v.x = 2.35
+    v.x = 1.75
   }
-  console.log(scale)
+
+  if (v.y < 0.5) {
+    v.y = 0.95
+  }
+
   dummy.position.set(...v)
-  dummy.scale.set([scale, scale, scale])
+  dummy.scale.set(scale, scale, scale)
   dummy.updateMatrix()
+
   instancedBoxMesh.setMatrixAt(i, dummy.matrix)
+  instancedBoxMesh.setColorAt(i, new THREE.Color(i % 2 ? 0xFFCB47 : 0xF27D7D))
+  instancedBoxMesh.instanceMatrix.needsUpdate = true
+
+  instancedBoxMesh.castShadow = true
+  instancedBoxMesh.receiveShadow = true
 
   meshProperties.push({
-    scale: [scale, scale, scale],
-    position: v,
     xRotationSpeed,
     yRotationSpeed
   })
@@ -50,20 +61,29 @@ const clock = new THREE.Clock()
 
 export const renderBoxes = () => {
   for (let i = 0; i < count; i++) {
-    // const delta = clock.getDelta()
-    const { position, scale, xRotationSpeed, yRotationSpeed } = meshProperties[i]
+    let t = clock.getElapsedTime();
+    const { xRotationSpeed, yRotationSpeed } = meshProperties[i]
 
-    // dummy.position.set(...position)
-    // dummy.scale.set(...scale)
-    // dummy.rotation.y += (Math.sin(xRotationSpeed / 4 + delta) / 500 + Math.sin(yRotationSpeed / 4 + delta) / 1000) * (i % 2 === 0 ? -1 : 1)
-    // dummy.rotation.z = dummy.rotation.y * 2
+    instancedBoxMesh.getMatrixAt(i, matrix)
+    matrix.decompose(dummy.position, dummy.quaternion, dummy.scale)
 
-    // dummy.updateMatrix()
+    // dummy.rotation.x += delta * xRotationSpeed * 2
+    // dummy.rotation.y += delta * yRotationSpeed * 2
 
-    // instancedBoxMesh.setMatrixAt(i, dummy.matrix)
+    dummy.rotation.set(
+      Math.cos(xRotationSpeed + t * Math.sign(xRotationSpeed)) * Math.PI * 0.0525,
+      Math.sin(yRotationSpeed + t * Math.sign(yRotationSpeed)) * Math.PI * 0.0525,
+      0
+    )
+
+    // dummy.position.z += Math.sin(delta) * 1
+    // dummy.position.y += Math.sin(delta) * 11.5
+
+    dummy.updateMatrix()
+
+    instancedBoxMesh.setMatrixAt(i, dummy.matrix)
+    instancedBoxMesh.instanceMatrix.needsUpdate = true
   }
-
-  instancedBoxMesh.instanceMatrix.needsUpdate = true
 }
 
 export default instancedBoxMesh
