@@ -3,7 +3,7 @@ import * as THREE from "three"
 import { groundSize } from "../config"
 const { width: w, length: l } = groundSize
 
-const amount = 10
+const amount = 6
 const count = Math.pow(amount, 2)
 
 const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
@@ -21,13 +21,22 @@ for (let i = 0; i < count; i++) {
   const xRotationSpeed = Math.random() * 5 * (inverse ? -1 : 1)
   const yRotationSpeed = Math.random() * 5 * (inverse ? -1 : 1)
 
-  const v = new THREE.Vector3(Math.random() * 2 - 1, (Math.random() * 2.5 - 1) * 0.5 + 0.5, (Math.random() * 2 - 1) * 15)
+  const v = new THREE.Vector3(
+    Math.random() * 2 - 1,
+    (Math.random() * 2.5 - 1) * 0.5 + 0.5,
+    (Math.random() * 2 - 1) * (l / 2)
+  )
 
   if (v.x < 0) {
     v.x -= 2.35
   } else {
     v.x = 2.35
   }
+  console.log(scale)
+  dummy.position.set(...v)
+  dummy.scale.set([scale, scale, scale])
+  dummy.updateMatrix()
+  instancedBoxMesh.setMatrixAt(i, dummy.matrix)
 
   meshProperties.push({
     scale: [scale, scale, scale],
@@ -36,25 +45,22 @@ for (let i = 0; i < count; i++) {
     yRotationSpeed
   })
 }
-
+instancedBoxMesh.instanceMatrix.needsUpdate = true
 const clock = new THREE.Clock()
 
 export const renderBoxes = () => {
   for (let i = 0; i < count; i++) {
-    const delta = clock.getDelta()
+    // const delta = clock.getDelta()
     const { position, scale, xRotationSpeed, yRotationSpeed } = meshProperties[i]
 
-    dummy.position.set(...position)
-    dummy.scale.set(...scale)
-    dummy.rotation.x += (Math.sin(i / 4 + delta) / 1000) * xRotationSpeed
-    dummy.rotation.y -= (Math.sin(i / 4 + delta) / 1000) * yRotationSpeed
-    // dummy.rotation.z += (delta * yRotationSpeed) / 10
-    // dummy.rotation.y += ((delta * yRotationSpeed) / 10) * (Math.random() * 2 - 1)
+    // dummy.position.set(...position)
+    // dummy.scale.set(...scale)
+    // dummy.rotation.y += (Math.sin(xRotationSpeed / 4 + delta) / 500 + Math.sin(yRotationSpeed / 4 + delta) / 1000) * (i % 2 === 0 ? -1 : 1)
     // dummy.rotation.z = dummy.rotation.y * 2
 
-    dummy.updateMatrix()
+    // dummy.updateMatrix()
 
-    instancedBoxMesh.setMatrixAt(i, dummy.matrix)
+    // instancedBoxMesh.setMatrixAt(i, dummy.matrix)
   }
 
   instancedBoxMesh.instanceMatrix.needsUpdate = true
