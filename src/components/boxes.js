@@ -6,11 +6,14 @@ const { width: w, length: l } = groundSize
 const amount = 6
 const count = Math.pow(amount, 2)
 
-const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({})
+const geometry = new THREE.BoxBufferGeometry(0.75, 0.75, 0.75)
+const material = new THREE.MeshBasicMaterial({
+  metalness: 0.7,
+  roughness: 0.1,
+})
 
 const instancedBoxMesh = new THREE.InstancedMesh(geometry, material, count)
-// instancedBoxMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
+instancedBoxMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
 
 const dummy = new THREE.Object3D()
 const matrix = new THREE.Matrix4()

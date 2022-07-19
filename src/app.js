@@ -1,6 +1,6 @@
 import * as THREE from "three"
 
-import { pointer } from "./utils/cursor"
+import "./utils/cursor"
 
 import { scene } from "./components/canvas/scene"
 import { camera } from "./components/canvas/camera"
@@ -8,9 +8,6 @@ import { renderer } from "./components/canvas/renderer"
 import { orbitControls } from "./components/canvas/orbitControls"
 import lights from "./components/canvas/lights"
 import { stats } from "./components/canvas/stats"
-
-import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js';
-			import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 
 // Components
 import mirror from "./components/mirror"
@@ -40,13 +37,11 @@ scene.add(...rings)
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.1)
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
-const reactAreaLight = new THREE.RectAreaLight(0xffffff, 7, 4, 7)
+const reactAreaLight = new THREE.RectAreaLight(0xffffff, 7, 4, 4)
 reactAreaLight.position.set(0, 4, 0)
 reactAreaLight.rotation.set(-Math.PI / 2, 0, 0)
 reactAreaLight.lookAt(0, 0, 0)
 scene.add(ambientLight, directionalLight, reactAreaLight)
-
-// scene.add( new RectAreaLightHelper( reactAreaLight ) );
 
 const cameraTarget = camera.position.clone()
 
