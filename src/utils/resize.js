@@ -1,17 +1,16 @@
-import { camera } from '../components/canvas/camera'
-import { renderer } from '../components/canvas/renderer'
-
+import { camera } from "../components/canvas/camera"
+import { renderer } from "../components/canvas/renderer"
 
 window.addEventListener("resize", () => {
   // Update sizes
-  const w = window.innerWidth / 1.5;
-  const h = window.innerHeight / 1.5;
+  const w = window.innerWidth
+  const h = window.innerHeight
 
   // Update camera
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
+  camera.aspect = w / h
+  camera.updateProjectionMatrix()
 
   // Update renderer
-  renderer.setSize(w, h);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-});
+  renderer.setSize(w, h)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})

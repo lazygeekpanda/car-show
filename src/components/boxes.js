@@ -29,9 +29,9 @@ for (let i = 0; i < count; i++) {
   )
 
   if (v.x < 0) {
-    v.x -= 1.75
+    v.x -= 1.85
   } else {
-    v.x = 1.75
+    v.x = 1.85
   }
 
   if (v.y < 0.5) {
@@ -43,7 +43,8 @@ for (let i = 0; i < count; i++) {
   dummy.updateMatrix()
 
   instancedBoxMesh.setMatrixAt(i, dummy.matrix)
-  instancedBoxMesh.setColorAt(i, new THREE.Color(...(i % 2 ? [0.4, 0.1, 0.1] : [0.05, 0.15, 0.4])))
+  instancedBoxMesh.setColorAt(i, new THREE.Color(i % 2 ? 0x171927 : 0x843B62))
+  // instancedBoxMesh.setColorAt(i, new THREE.Color(...(i % 2 ? [0.4, 0.1, 0.1] : [0.05, 0.15, 0.4])))
   instancedBoxMesh.instanceMatrix.needsUpdate = true
 
   instancedBoxMesh.castShadow = true
@@ -65,9 +66,6 @@ export const renderBoxes = () => {
     instancedBoxMesh.getMatrixAt(i, matrix)
     matrix.decompose(dummy.position, dummy.quaternion, dummy.scale)
 
-    // dummy.rotation.x += delta * xRotationSpeed * 2
-    // dummy.rotation.y += delta * yRotationSpeed * 2
-
     dummy.rotation.set(
       Math.cos(xRotationSpeed + t * Math.sign(xRotationSpeed)) * Math.PI * 0.0525,
       Math.sin(yRotationSpeed + t * Math.sign(yRotationSpeed)) * Math.PI * 0.0525,
@@ -75,7 +73,7 @@ export const renderBoxes = () => {
     )
 
     // dummy.position.z += Math.sin(delta) * 1
-    // dummy.position.y += Math.sin(delta) * 11.5
+    dummy.position.y += Math.sin(t * xRotationSpeed * yRotationSpeed) / 1000
 
     dummy.updateMatrix()
 

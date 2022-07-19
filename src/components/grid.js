@@ -16,7 +16,7 @@ const material = new THREE.MeshBasicMaterial({
   side: THREE.DoubleSide,
   map: diffuseMap,
   alphaMap: diffuseMap,
-  opacity: 0.5,
+  opacity: 0.95,
   transparent: true
 })
 
@@ -27,10 +27,8 @@ grid.position.y = 0.225
 const clock = new THREE.Clock()
 
 export const renderGrid = () => {
-  let t = -clock.getElapsedTime() * 0.68
+  let t = -clock.getElapsedTime() * 0.5
   diffuseMap.offset.set(0, t)
-
-  grid.position.y += Math.sin(t) / 1000
 }
 
 export default grid

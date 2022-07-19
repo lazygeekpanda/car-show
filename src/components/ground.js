@@ -9,19 +9,19 @@ const { width: w, height: h, length: l } = groundSize
 const normalMap = textureLoader.load("textures/terrain-normal.jpg")
 const roughnessMap = textureLoader.load("textures/terrain-roughness.jpg")
 
-normalMap.wrapS = THREE.RepeatWrapping;
-normalMap.wrapT = THREE.RepeatWrapping;
-normalMap.repeat.set(5, 5);
-normalMap.offset.set(0, 0);
+normalMap.wrapS = THREE.RepeatWrapping
+normalMap.wrapT = THREE.RepeatWrapping
+normalMap.repeat.set(5, 5)
+normalMap.offset.set(0, 0)
 
-roughnessMap.wrapS = THREE.RepeatWrapping;
-roughnessMap.wrapT = THREE.RepeatWrapping;
-roughnessMap.repeat.set(5, 5);
-roughnessMap.offset.set(0, 0);
+roughnessMap.wrapS = THREE.RepeatWrapping
+roughnessMap.wrapT = THREE.RepeatWrapping
+roughnessMap.repeat.set(5, 5)
+roughnessMap.offset.set(0, 0)
 
 const geometry = new THREE.BoxBufferGeometry(w, l, h)
 const material = new THREE.MeshPhysicalMaterial({
-  color: 0x222,
+  color: 0xe0031,
   clearcoat: 1,
   clearcoatRoughness: 0.5,
 
@@ -43,10 +43,18 @@ ground.position.y = -h / 2
 ground.castShadow = true
 ground.receiveShadow = true
 
+let params = {
+  color: 0xe0031
+}
+
 const groundFolder = gui.addFolder("Ground")
 groundFolder.add(ground.material, "clearcoat", 0, 1)
 groundFolder.add(ground.material, "clearcoatRoughness", 0, 1)
 groundFolder.add(ground.material, "roughness", 0, 1)
+groundFolder.addColor(params, "color").onChange((e) => {
+  ground.material.color = new THREE.Color(params.color)
+})
+ground
 groundFolder.add(ground.material, "metalness", 0, 1)
 groundFolder.add(ground.material, "reflectivity", 0, 1)
 groundFolder.add(ground.material, "opacity", 0, 1)

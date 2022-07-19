@@ -33,7 +33,7 @@ for (let i = 0; i < arr.length; i++) {
   if (dist > 2) {
     colorScale = 1 - (Math.min(dist, 12) - 2) / 100
   }
-  colorScale *= 0.5
+  // colorScale *= 0.15
 
   if (i % 2 == 1) {
     ring.material.emissive = new THREE.Color(6, 0.15, 0.7).multiplyScalar(colorScale)
@@ -43,7 +43,7 @@ for (let i = 0; i < arr.length; i++) {
 
   ring.receiveShadow = true
   ring.castShadow = true
-  ring.layers.enable(1)
+  // ring.layers.enable(1)
   list.push(ring)
 }
 
@@ -53,12 +53,24 @@ export const renderRings = () => {
   const elapsed = clock.getElapsedTime()
 
   for (let i = 0; i < list.length; i++) {
-    const mesh = list[i]
-    let z = (i - list.length / 2) * 3.5 + ((elapsed * 0.4) % 3.5) * 2
+    const ring = list[i]
+    let z = (i - list.length / 2) * 3.5 + ((elapsed * 0.3) % 3.5) * 2
 
     let dist = Math.abs(z)
-    mesh.position.set(0, 0, -z)
-    mesh.scale.set(1 - dist * 0.04, 1 - dist * 0.04, 1 - dist * 0.04)
+    ring.position.set(0, 0, -z)
+    ring.scale.set(1 - dist * 0.04, 1 - dist * 0.04, 1 - dist * 0.04)
+
+    let colorScale = 1
+    if (dist > 2) {
+      colorScale = 1 - (Math.min(dist, 12) - 2) / 100
+    }
+    colorScale *= 0.5
+
+    if (i % 2 == 1) {
+      ring.material.emissive = new THREE.Color(6, 0.15, 0.7).multiplyScalar(colorScale)
+    } else {
+      ring.material.emissive = new THREE.Color(0.1, 0.7, 3).multiplyScalar(colorScale)
+    }
   }
 }
 
