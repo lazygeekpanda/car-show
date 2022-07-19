@@ -9,7 +9,7 @@ const lights = []
  * Teal Spot Light
  * ----------------------
  */
-const tealSpotLight = new THREE.SpotLight(0x2dd4bf, 1.5)
+const tealSpotLight = new THREE.SpotLight(0x2dd4bf, 0.5)
 
 tealSpotLight.castShadow = true
 tealSpotLight.position.set(7, 1, -10)
@@ -43,14 +43,14 @@ tealSpotLightGroup.add(tealSpotLight, 'distance').min(0).max(1000).step(1).name(
  * Rose Spot Light
  * ----------------------
  */
-const roseSpotLight = new THREE.SpotLight(0xf43f5e, 10)
+const roseSpotLight = new THREE.SpotLight(0xf43f5e, 2)
 
 roseSpotLight.castShadow = true
 roseSpotLight.position.set(-25, 5, 0)
 roseSpotLight.angle = -0.4
 roseSpotLight.penumbra = 0.5
 // roseSpotLight.decay = 0.5
-// roseSpotLight.distance = 500
+roseSpotLight.distance = 80
 
 roseSpotLight.shadow.mapSize.width = 256
 roseSpotLight.shadow.mapSize.height = 256

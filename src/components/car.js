@@ -17,10 +17,12 @@ export const loadCar = () =>
         gltf.scene.position.set(0, -0.05, 0)
         gltf.scene.traverse((object) => {
           if (object.isMesh) {
-            object.material.envMapIntensity = 40
+            console.log(object.name, object.userData)
+            object.material.envMapIntensity = 20
+            object.material.reflectivity = 0.5
+            object.castShadow = true
+            object.receiveShadow = true
           }
-          object.castShadow = true
-          object.receiveShadow = true
         })
 
         resolve(gltf)

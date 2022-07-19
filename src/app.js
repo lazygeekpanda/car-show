@@ -19,6 +19,7 @@ import rings, { renderRings } from "./components/rings"
 
 import effectsComposer from "./components/canvas/effects"
 import "./utils/resize"
+import { gui } from "./components/canvas/gui"
 
 camera.layers.enable(1)
 
@@ -31,11 +32,11 @@ scene.add(camera, ...lights)
 scene.add(ground)
 // scene.add(mirror)
 scene.add(grid)
-// scene.add(boxes)
+scene.add(boxes)
 scene.add(...rings)
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1)
-const directionalLight = new THREE.DirectionalLight(0x2dd4bf, 0.75)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.75)
 
 scene.add(ambientLight, directionalLight)
 
@@ -59,10 +60,11 @@ const init = () => {
 const initCubeCamera = () => {
   cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
     generateMipmaps: true,
-    // encoding: THREE.sRGBEncoding,
-    minFilter: THREE.LinearMipmapLinearFilter
+    encoding: THREE.sRGBEncoding,
+    // minFilter: THREE.LinearMipmapLinearFilter
   })
-  cubeCamera = new THREE.CubeCamera(0.1, 10, cubeRenderTarget)
+  cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRenderTarget)
+
   scene.add(cubeCamera)
 
   carModel.scene.visible = false
@@ -108,9 +110,9 @@ const render = () => {
 
   orbitControls.update()
 
-  // renderBoxes()
+  renderBoxes()
   renderGrid()
-  // renderRings()
+  renderRings()
 
   // Render scene
   renderer.clearDepth()

@@ -84,6 +84,4 @@ export const renderBoxes = () => {
   }
 }
 
-instancedBoxMesh.layers.enable(1)
-
 export default instancedBoxMesh
