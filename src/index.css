@@ -1,6 +1,8 @@
 * {
   margin: 0;
   padding: 0;
+
+  box-sizing: border-box;
 }
 
 html,
@@ -41,3 +43,39 @@ body {
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
+
+.colors-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #000;
+
+  transform: translate3d(-50%, 0, 0);
+}
+
+.colors-container>button {
+  outline: none;
+  border: 0;
+  background-color: orange;
+  color: #fff;
+
+  padding: 20px 25px;
+}
+
+.colors-container>button:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.colors-container>button:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.colors-container>button:hover {
+  background-color: red;
+}
+

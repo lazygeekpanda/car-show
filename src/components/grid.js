@@ -16,13 +16,13 @@ const material = new THREE.MeshBasicMaterial({
   side: THREE.DoubleSide,
   map: diffuseMap,
   alphaMap: diffuseMap,
-  opacity: 0.95,
+  opacity: 1,
   transparent: true
 })
 
 const grid = new THREE.Mesh(geometry, material)
 grid.rotation.x = -Math.PI / 2
-grid.position.y = 0.225
+grid.position.y = 0.05
 
 const clock = new THREE.Clock()
 

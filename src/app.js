@@ -37,9 +37,11 @@ scene.add(...rings)
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.1)
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
-const pointLight = new THREE.PointLight(0xffffff, 1, 100)
-
-scene.add(ambientLight, directionalLight, pointLight)
+const reactAreaLight = new THREE.RectAreaLight(0xffffff, 5, 3, 3)
+reactAreaLight.position.set(0, 2, 0.5)
+reactAreaLight.rotation.set(-Math.PI / 2, 0, 0)
+reactAreaLight.lookAt(0, 0, 0)
+scene.add(ambientLight, directionalLight, reactAreaLight)
 
 const cameraTarget = camera.position.clone()
 
@@ -66,7 +68,7 @@ carFolder.addColor(carParams, "color").onChange(() => {
 })
 
 const init = () => {
-  cameraTarget.set(1.2, 1.2, 4.5)
+  cameraTarget.set(1.2, 2, 4.5)
 
   render()
   initCubeCamera()
@@ -109,7 +111,7 @@ const render = () => {
   window.requestAnimationFrame(render)
 
   if (!cameraTargetFinished) {
-    camera.position.lerp(cameraTarget, 0.01)
+    camera.position.lerp(cameraTarget, 0.015)
   }
 
   orbitControls.update()

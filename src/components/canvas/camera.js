@@ -3,12 +3,12 @@ import * as THREE from "three"
 import { gui } from './gui'
 
 export const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100)
-camera.position.x = 4.6
-camera.position.y = 2
-camera.position.z = 7.5
-// camera.position.x = 10
-// camera.position.y = 3
-// camera.position.z = 9
+// camera.position.x = 4.6
+// camera.position.y = 12
+// camera.position.z = 4.5
+camera.position.x = 10
+camera.position.y = 5
+camera.position.z = 7
 
 camera.lookAt(0, 0, 0)
 
