@@ -12,11 +12,11 @@ const materialOptions = {
 const geometry = new THREE.TorusGeometry(3.35, 0.04, 16, 100, Math.PI)
 const violetMaterial = new THREE.MeshStandardMaterial({
   ...materialOptions,
-  emissive: 0xfff
+  emissiveIntensity: 2
 })
 const tealMaterial = new THREE.MeshStandardMaterial({
   ...materialOptions,
-  emissive: 0xfff
+  emissiveIntensity: 2
 })
 
 const arr = [...Array(RING_COUNT).keys()]
@@ -33,10 +33,10 @@ for (let i = 0; i < arr.length; i++) {
   if (dist > 2) {
     colorScale = 1 - (Math.min(dist, 12) - 2) / 100
   }
-  // colorScale *= 0.15
+  colorScale *= 0.5
 
   if (i % 2 == 1) {
-    ring.material.emissive = new THREE.Color(6, 0.15, 0.7).multiplyScalar(colorScale)
+    ring.material.emissive = new THREE.Color(10, 10, 10)
   } else {
     ring.material.emissive = new THREE.Color(0.1, 0.7, 3).multiplyScalar(colorScale)
   }
@@ -64,7 +64,7 @@ export const renderRings = () => {
     if (dist > 2) {
       colorScale = 1 - (Math.min(dist, 12) - 2) / 100
     }
-    colorScale *= 0.5
+    colorScale *= 0.25
 
     if (i % 2 == 1) {
       ring.material.emissive = new THREE.Color(6, 0.15, 0.7).multiplyScalar(colorScale)

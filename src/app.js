@@ -20,11 +20,8 @@ import rings, { renderRings } from "./components/rings"
 // Texts
 import "./components/texts/title"
 
-import effectsComposer from "./components/canvas/effects"
 import "./utils/resize"
 import { gui } from "./components/canvas/gui"
-
-camera.layers.enable(1)
 
 /**
  * ----------------------
@@ -108,19 +105,8 @@ const initCubeCamera = () => {
  * Animations
  * ----------------------
  */
-
-const clock = new THREE.Clock()
-
 const render = () => {
   window.requestAnimationFrame(render)
-
-  // Disabled effects as the performance drops a lot
-  // Also autoClear messes up with CubeCamera
-  // renderer.autoClear = false
-  // renderer.clear()
-  camera.layers.set(1)
-  effectsComposer.render()
-  camera.layers.set(0)
 
   if (!cameraTargetFinished) {
     camera.position.lerp(cameraTarget, 0.01)
@@ -133,19 +119,11 @@ const render = () => {
   renderRings()
   renderCar()
 
-  // renderer.clearDepth()
   renderer.render(scene, camera)
-
   stats.update()
 }
 
 const renderCar = () => {
-  // let group = carModel.scene.children[0].children[0].children[0]
-  // group.children[0].rotation.x += 0.15
-  // group.children[2].rotation.x += 0.15
-  // group.children[4].rotation.x += 0.15
-  // group.children[6].rotation.x += 0.15
-
   carModel.scene.traverse((object) => {
     if (["Front_Right_Wheel", "Front_Left_Wheel", "Rear_Right_Wheel", "Rear_Left_Wheel"].includes(object.name)) {
       object.rotation.x -= 0.075
