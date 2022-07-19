@@ -9,6 +9,9 @@ import { orbitControls } from "./components/canvas/orbitControls"
 import lights from "./components/canvas/lights"
 import { stats } from "./components/canvas/stats"
 
+import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js';
+			import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
+
 // Components
 import mirror from "./components/mirror"
 import ground from "./components/ground"
@@ -37,11 +40,13 @@ scene.add(...rings)
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.1)
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
-const reactAreaLight = new THREE.RectAreaLight(0xffffff, 5, 3, 3)
-reactAreaLight.position.set(0, 2, 0.5)
+const reactAreaLight = new THREE.RectAreaLight(0xffffff, 7, 4, 7)
+reactAreaLight.position.set(0, 4, 0)
 reactAreaLight.rotation.set(-Math.PI / 2, 0, 0)
 reactAreaLight.lookAt(0, 0, 0)
 scene.add(ambientLight, directionalLight, reactAreaLight)
+
+// scene.add( new RectAreaLightHelper( reactAreaLight ) );
 
 const cameraTarget = camera.position.clone()
 
