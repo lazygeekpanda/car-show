@@ -6,14 +6,8 @@
 html,
 body {
   overflow: hidden;
+  /* cursor: none; */
 }
-
-/* .webgl {
-  position: fixed;
-  top: 0;
-  left: 0;
-  outline: none;
-} */
 
 .canvas-container {
   width: 100vw;
@@ -23,4 +17,27 @@ body {
   justify-content: center;
 
   background-color: #000;
+}
+
+.cursor.outer {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+  position: fixed;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  transform: translate(calc(-50% + 15px), -50%);
+}
+
+.cursor.inner {
+  width: 2px;
+  height: 2px;
+  border-radius: 100%;
+  background-color: #fff;
+  opacity: 1;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }

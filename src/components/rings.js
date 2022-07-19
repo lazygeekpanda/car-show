@@ -43,7 +43,7 @@ for (let i = 0; i < arr.length; i++) {
 
   ring.receiveShadow = true
   ring.castShadow = true
-  // ring.layers.enable(1)
+  ring.layers.enable(1)
   list.push(ring)
 }
 

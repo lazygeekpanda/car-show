@@ -27,7 +27,7 @@ const unrealBloomPass = new UnrealBloomPass(
 unrealBloomPass.threshold = 0
 unrealBloomPass.strength = 1
 unrealBloomPass.radius = 0.15
-unrealBloomPass.renderToScreen = true
+unrealBloomPass.renderToScreen = false
 
 const ssaaRenderPass = new SSAARenderPass(scene, camera)
 ssaaRenderPass.sampleLevel = 1

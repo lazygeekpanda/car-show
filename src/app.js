@@ -1,6 +1,6 @@
 import * as THREE from "three"
 
-import { cursor } from "./utils/cursor"
+import { pointer } from "./utils/cursor"
 
 import { scene } from "./components/canvas/scene"
 import { camera } from "./components/canvas/camera"
@@ -17,11 +17,14 @@ import grid, { renderGrid } from "./components/grid"
 import boxes, { renderBoxes } from "./components/boxes"
 import rings, { renderRings } from "./components/rings"
 
+// Texts
+import "./components/texts/title"
+
 import effectsComposer from "./components/canvas/effects"
 import "./utils/resize"
 import { gui } from "./components/canvas/gui"
 
-// camera.layers.enable(1)
+camera.layers.enable(1)
 
 /**
  * ----------------------
@@ -66,8 +69,7 @@ carFolder.addColor(carParams, "color").onChange(() => {
 })
 
 const init = () => {
-  cameraTarget.set(1.2, 0.95, 3.5)
-  camera.position.copy(cameraTarget)
+  cameraTarget.set(1.2, 1.2, 4.5)
 
   render()
   initCubeCamera()
@@ -116,26 +118,22 @@ const render = () => {
   // Also autoClear messes up with CubeCamera
   // renderer.autoClear = false
   // renderer.clear()
-  // camera.layers.set(1)
-  // effectsComposer.render()
+  camera.layers.set(1)
+  effectsComposer.render()
+  camera.layers.set(0)
 
-  // if (!cameraTargetFinished) {
-  //   camera.position.lerp(cameraTarget, 0.01)
-  // } else {
-  //   cameraTarget.set(1.2 + (cursor.x + cursor.y) * 2, 0.95 + cursor.y * 2, 3.5 - cursor.x * 2)
-  //   camera.position.lerp(cameraTarget, 0.01)
-  // }
+  if (!cameraTargetFinished) {
+    camera.position.lerp(cameraTarget, 0.01)
+  }
 
   orbitControls.update()
 
   renderBoxes()
   renderGrid()
   renderRings()
-
-  // Render scene
-  // renderer.clearDepth()
-  // camera.layers.set(0)
   renderCar()
+
+  // renderer.clearDepth()
   renderer.render(scene, camera)
 
   stats.update()

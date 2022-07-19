@@ -8,3 +8,5 @@ orbitControls.enableDamping = true
 
 orbitControls.minDistance = 3
 orbitControls.maxDistance = 7
+
+orbitControls.maxPolarAngle = Math.PI * 0.5;

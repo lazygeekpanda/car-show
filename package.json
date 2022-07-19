@@ -28,6 +28,7 @@
     "stats.js": "^0.17.0",
     "style-loader": "^2.0.0",
     "three": "^0.142.0",
+    "troika-three-text": "^0.46.4",
     "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2",
