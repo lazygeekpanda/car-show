@@ -1,6 +1,7 @@
 import * as THREE from "three"
 
-import "./utils/cursor"
+import Picker from "vanilla-picker/csp"
+import "vanilla-picker/dist/vanilla-picker.csp.css"
 
 import { scene } from "./components/canvas/scene"
 import { camera } from "./components/canvas/camera"
@@ -10,7 +11,6 @@ import lights from "./components/canvas/lights"
 import { stats } from "./components/canvas/stats"
 
 // Components
-import mirror from "./components/mirror"
 import ground from "./components/ground"
 import { loadCar } from "./components/car"
 import grid, { renderGrid } from "./components/grid"
@@ -20,8 +20,8 @@ import rings, { renderRings } from "./components/rings"
 // Texts
 import "./components/texts/title"
 
+import "./utils/cursor"
 import "./utils/resize"
-import { gui } from "./components/canvas/gui"
 
 /**
  * ----------------------
@@ -30,14 +30,13 @@ import { gui } from "./components/canvas/gui"
  */
 scene.add(camera, ...lights)
 scene.add(ground)
-// scene.add(mirror)
 scene.add(grid)
 scene.add(boxes)
 scene.add(...rings)
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.1)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
-const reactAreaLight = new THREE.RectAreaLight(0xffffff, 7, 4, 4)
+const reactAreaLight = new THREE.RectAreaLight(0xffffff, 1, 4, 4)
 reactAreaLight.position.set(0, 4, 0)
 reactAreaLight.rotation.set(-Math.PI / 2, 0, 0)
 reactAreaLight.lookAt(0, 0, 0)
@@ -48,27 +47,43 @@ const cameraTarget = camera.position.clone()
 let cubeCamera, cubeRenderTarget, carModel
 let cameraTargetFinished = false
 
-let carParams = {
-  color: 0x520804
-}
-
-const carFolder = gui.addFolder("Car")
-carFolder.open()
-carFolder.addColor(carParams, "color").onChange(() => {
-  console.log(carParams)
-  carModel.scene.traverse((object) => {
-    if (object.name === "Main_Chassis_Body_Color_0") {
-      // if (object.name === "Object_16") { // Pagani
-      // if (object.name === "Material3_10") { // Mclaren
-      // if (object.name === "CarBody_1_Car_Paint_0") { // Corvete
-      object.material.color = new THREE.Color(carParams.color)
-    }
-    object.updateMatrix()
-  })
-})
-
 const init = () => {
   cameraTarget.set(1.2, 2, 4.5)
+
+  const parent = document.querySelector("#colorPicker")
+  const picker = new Picker(parent)
+
+  picker.setOptions({
+    popup: 'top',
+    alpha: false,
+    editor: false
+  })
+
+  picker.onChange = (color) => {
+    console.log(color)
+    changeCarBodyColor(color.rgbString)
+  }
+
+  const btns = document.querySelectorAll("[data-color]")
+
+  btns.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      const color = btn.dataset.color
+      changeCarBodyColor(color)
+    })
+  )
+
+  const changeCarBodyColor = (color) => {
+    carModel.scene.traverse((object) => {
+      if (object.name === "Main_Chassis_Body_Color_0") {
+        // if (object.name === "Object_16") { // Pagani
+        // if (object.name === "Material3_10") { // Mclaren
+        // if (object.name === "CarBody_1_Car_Paint_0") { // Corvete
+        object.material.color = new THREE.Color(color)
+      }
+      object.updateMatrix()
+    })
+  }
 
   render()
   initCubeCamera()

@@ -1,5 +1,4 @@
 import * as THREE from "three"
-import { gui } from "./canvas/gui"
 import { textureLoader } from "../utils/loaders"
 
 import { groundSize } from "../config"
@@ -42,21 +41,5 @@ ground.rotation.x = -Math.PI / 2
 ground.position.y = -h / 2
 ground.castShadow = true
 ground.receiveShadow = true
-
-let params = {
-  color: 0xe0031
-}
-
-const groundFolder = gui.addFolder("Ground")
-groundFolder.add(ground.material, "clearcoat", 0, 1)
-groundFolder.add(ground.material, "clearcoatRoughness", 0, 1)
-groundFolder.add(ground.material, "roughness", 0, 1)
-groundFolder.addColor(params, "color").onChange((e) => {
-  ground.material.color = new THREE.Color(params.color)
-})
-ground
-groundFolder.add(ground.material, "metalness", 0, 1)
-groundFolder.add(ground.material, "reflectivity", 0, 1)
-groundFolder.add(ground.material, "opacity", 0, 1)
 
 export default ground

@@ -1,10 +1,5 @@
 # 3D Car Show
 
-## Ideas
- - Add html points, when clicked, zoom to part and show some description + animations
- - Change material colors
- - Add moving studio lights
-
 ## Read
 - [The Big List of three.js](https://discoverthreejs.com/tips-and-tricks/)
 - [How to update things](https://threejs.org/docs/#manual/en/introduction/How-to-update-things)
