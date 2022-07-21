@@ -159,8 +159,12 @@ const renderCar = () => {
   }
 }
 
+const loader = document.querySelector('.loader')
+
 loadCar().then((carScene) => {
   carModel = carScene
   scene.add(carScene.scene)
+
+  loader.classList.add('hidden')
   init()
 })

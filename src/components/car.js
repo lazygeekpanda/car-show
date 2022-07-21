@@ -32,7 +32,7 @@ export const loadCar = () =>
         })
 
         resolve(gltf)
-        // dracoLoader.dispose()
+        dracoLoader.dispose()
       },
       (xhr) => {
         console.log((xhr.loaded / xhr.total) * 100 + "% loaded")
